@@ -16,3 +16,6 @@ def test_reverse_string():
     assert functions.reverse_string("hello") == "olleh"
     assert functions.reverse_string("Python") == "nohtyP"
     assert functions.reverse_string("") == ""
+
+def test_count_vowels():
+    
