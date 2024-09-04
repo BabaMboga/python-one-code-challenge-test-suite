@@ -31,3 +31,69 @@ def test_calculate_factorial():
     # Ensure there is an error for negative input
     with pytest.raises(ValueError):
         functions.calculate_factorial(-1)
+
+
+def test_apply_decorator(capfd):
+    
+    def simple_func():
+        print("Original function called")
+        return "Function result"
+    
+    # Apply the decorator using the student's function
+    decorated_func = functions.apply_decorator(simple_func)
+    result = decorated_func()
+
+    # Capture the output 
+    out, _ = capfd.readouterr()
+
+    # Check if the decorator applied correctly
+    assert "Decorator Applied" in out
+    assert "Original function called" in out
+    assert result == "Function result"
+
+def test_sort_by_age():
+    people = [("Alice", 30), ("Bob", 25), ("Charlie", 35)]
+    sorted_people = functions.sort_by_age(people)
+    assert sorted_people == [("Bob", 25), ("Alice", 30), ("Charlie", 35)]
+
+    # Test with a different List
+    people = [("Tom",50),("Jerry",30),("Spike",70)]
+    sorted_people = functions.sort_by_age(people)
+    assert sorted_people == [("Jerry",30),("Tom",50),("Spike",70)]
+
+def test_merge_dicts():
+    dict1 = {'a':1, 'b':2}
+    dict2 = {'b':3, 'c':4}
+    merged_dict = functions.merge_dicts(dict1, dict2)
+    assert merged_dict == {'a':1, 'b':5, 'c':4}
+
+    # Test with empty dictionaries
+    dict1 = {}
+    dict2 = {}
+    merged_dict = functions.merge_dicts(dict1, dict2)
+    assert merged_dict == {}
+
+    # Test with no overlapping keys
+    dict1 = {'x':10}
+    dict2 = {'y': 20}
+    merged_dict = functions.merge_dicts(dict1, dict2)
+    assert merged_dict == {'x':10, 'y':20}
+
+def test_function_names():
+    requirerd_functions = [
+        "add_numbers",
+        "is_even",
+        "reverse_string",
+        "count_vowels",
+        "calculate_factorial",
+        "apply_decorator",
+        "sort_by_age",
+        "merge_dicts",
+    ]
+
+    for func_name in requirerd_functions:
+        assert hasattr(functions, func_name), f"Function '{func_name}' is missing or incorrectly named."
+
+# Run the tests
+if __name__ == "__main__":
+    pytest.main()
